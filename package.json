@@ -4,6 +4,10 @@
 	"description": "Adds a 'regions' section to the explorer view.",
 	"publisher": "DrewPereli",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/drewpereli/vscode-region-tree-view.git"
+	},
 	"engines": {
 		"vscode": "^1.60.0"
 	},
