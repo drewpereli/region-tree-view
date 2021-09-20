@@ -38,7 +38,13 @@ export class RegionsProvider implements vscode.TreeDataProvider<RegionTreeItem> 
 
       let text = activeDocument.getText();
 
-      let region = new Region(text, baseName);
+      let fileExtension = fileName.split('.').pop();
+
+      if (!text || (fileExtension !== 'js' && fileExtension !== 'hbs')) {
+        return Promise.resolve([]);
+      }
+
+      let region = new Region(text, baseName, 0, fileExtension);
 
       let item = new RegionTreeItem(region);
 

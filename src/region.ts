@@ -9,13 +9,12 @@ interface StartEndMatch {
 
 export default class Region {
   
-  constructor(content: string, name: string) {
-    this.content = content;
-    this.name = name;
-  }
-
-  content : string;
-  name : string;
+  constructor(
+    private readonly content: string, 
+    public readonly name: string, 
+    public readonly startIndex: number,
+    private readonly fileExtension : 'js' | 'hbs'
+  ) {}
 
   getChildRegions() : Region[] {
     if (!this.startRegexp.test(this.content)) {
@@ -56,7 +55,7 @@ export default class Region {
 
           let regionName = this.startRegexp.exec(currChildRegionStartMatch.text)?.[1] || 'unnamed region';
 
-          let newRegion = new Region(text, regionName);
+          let newRegion = new Region(text, regionName, this.startIndex + currChildRegionStartMatch.index, this.fileExtension);
 
           regions.push(newRegion);
         }
@@ -66,6 +65,21 @@ export default class Region {
     return regions;
   }
 
-  private startRegexp = /\/\* #region (.+?) \*\//;
-  private endRegexp = /\/\* #endregion \*\//;
+  private get startRegexp() {
+    if (this.fileExtension === 'js') {
+      return /\/\* #region (.+?) \*\//;
+    }
+    else {
+      return /\{\{\! #region (.+?) \}\}/;
+    }
+  }
+
+  private get endRegexp() {
+    if (this.fileExtension === 'js') {
+      return /\/\* #endregion \*\//;
+    }
+    else {
+      return /\{\{\! #endregion \}\}/;
+    }
+  }
 }
