@@ -1,7 +1,7 @@
 {
 	"name": "region-tree-view",
-	"displayName": "region-tree-view",
-	"description": "",
+	"displayName": "#region tree view",
+	"description": "Adds a 'regions' section to the explorer view.",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.60.0"
